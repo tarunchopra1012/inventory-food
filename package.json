@@ -1,12 +1,17 @@
 {
   "name": "inventory-food",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Food Inventory application that will fetch the products from the Square.",
+  "main": "app.js",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node app.js",
+    "dev": "nodemon app.js"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC"
+  "author": "Tarun Chopra",
+  "license": "MIT",
+  "devDependencies": {
+    "nodemon": "^2.0.22"
+  }
 }

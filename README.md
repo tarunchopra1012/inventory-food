@@ -10,7 +10,7 @@ The basic gist of the project is that we can fetch the products from the Square 
 
 ## Usage
 
-Explain how to use your project here.
+I will be using ECMAScript modules (ES modules) instead of the CommonJS module system. 
 
 ## Contributing
 
