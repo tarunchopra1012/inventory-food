@@ -2,8 +2,6 @@ import { conn } from '../config/database.js';
 
 const getVendors = async (limit, offset) => {
     try {
-      // const results = await conn.query(getVendorsQuery);
-  
       const results = await conn.query(
         `SELECT * FROM wtf_locations LIMIT ? OFFSET ?`,
         [limit, offset]
