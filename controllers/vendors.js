@@ -1,5 +1,7 @@
 import phpUnserialize from 'phpunserialize';
 import { getVendors, getTotalVendors } from '../models/vendor.js';
+import jwt from 'jsonwebtoken';
+import { conn } from '../config/database.js';
 
 const getVendorData = async (req, res, next) => {
   try {
@@ -38,6 +40,48 @@ const getVendorData = async (req, res, next) => {
   }
 };
 
+const generateToken = async (req, res, next) => {
+  let post = req.body;
+
+  if(post.email && post.password) {
+    await conn.query("SELECT location_id from wtf_locations where email = ? and password = ?", [post.email, post.password], async function(err, rows) {
+      if (err) {
+        res.send({
+            status: "error",
+            message: err,
+            data: []
+        });
+      } else {
+        if (rows && rows.length > 0) {
+          let getToken = await jwt.sign({
+                  data: rows[0]["location_id"],
+              },
+              post.email, {
+                  expiresIn: "12h"
+              }
+          );
+
+          res.send({
+              status: "ok",
+              message: "success",
+              web_access_token: getToken,
+          });
+      } else {
+          res.send({
+              status: "error",
+              message: "Not a valid request. user not found.",
+          });
+      }
+      }
+    })
+  } else {
+    res.status(400).json({
+      "message": "Please provide valid email and password."
+    })
+  }
+}
+
 export {
-  getVendorData
+  getVendorData,
+  generateToken
 }

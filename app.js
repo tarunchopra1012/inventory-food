@@ -1,11 +1,15 @@
 import express from 'express';
 import createError from 'http-errors';
 import routes from './config/routes.js';
+import bodyParser from 'body-parser';
 
 import dotenv from 'dotenv';
 dotenv.config();
 
 const app = express();
+
+app.use(bodyParser.json()); // get information from html forms
+app.use(bodyParser.urlencoded({ extended: true }));
 
 // Define Routes
 routes(app);
