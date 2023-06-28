@@ -2,6 +2,7 @@ import phpUnserialize from 'phpunserialize';
 import { getVendors, getTotalVendors } from '../models/vendor.js';
 import jwt from 'jsonwebtoken';
 import { conn } from '../config/database.js';
+import SquareHelper from '../helpers/square.js';
 
 const getVendorData = async (req, res, next) => {
   try {
@@ -81,7 +82,27 @@ const generateToken = async (req, res, next) => {
   }
 }
 
+const getAllSquareLocations = (req, res, next) => {
+  // We will pass vendor id here and fetch its token from the database.
+  const token = '';
+  // Create an instance of SquareHelper with your Square access token
+  const squareHelper = new SquareHelper(token);
+
+  // Call the getVendorLocations method
+  squareHelper.getVendorLocations()
+    .then((locations) => {
+      // Process the locations data
+      console.log(locations)
+      res.status(200).json(locations);
+    })
+    .catch((error) => {
+      // Handle any errors that occurred
+      console.error(error);
+    });
+}
+
 export {
   getVendorData,
-  generateToken
+  generateToken,
+  getAllSquareLocations
 }
